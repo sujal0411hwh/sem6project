@@ -1,0 +1,237 @@
+/* General Reset */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html, body {
+    height: 100%;
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f9;
+    overflow-x: hidden;
+}
+
+/* Hamburger Menu */
+.nav-toggle {
+    display: none;
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    z-index: 20;
+    cursor: pointer;
+    font-size: 24px;
+    color: #000;
+    background: white;
+    padding: 5px 10px;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+}
+
+.close-btn {
+    display: none;
+}
+
+/* Navbar Styles */
+.navbar {
+    width: 170px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    background-color: #000000;
+    padding-top: 140px;
+    padding-left: 20px;
+    z-index: 10;
+    transition: transform 0.3s ease-in-out;
+}
+
+.navbar a {
+    padding: 14px 1px;
+    text-decoration: none;
+    font-size: 20px;
+    color: white;
+    display: block;
+}
+
+.navbar a:hover {
+    color: #76c7df;
+}
+
+/* Chatbot Logo */
+.image1 {
+    width: 137px;
+    height: 112px;
+    margin-top: -133px;
+    margin-left: 8px;
+}
+
+/* Social Icons */
+.social-icons {
+    display: flex;
+    align-items: center;
+    gap: 17px;
+    margin-top: 20px;
+}
+
+/* Content Box */
+.content-box {
+    width: calc(100% - 200px);
+    height: 65px;
+    padding: 15px;
+    margin: 0 auto;
+    margin-left: 200px;
+    background-color: #e0dbdb;
+    font-size: 25px;
+    color: rgb(84, 82, 82);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+/* Main Content */
+.main-content {
+    width: 80%;
+    max-width: 1000px;
+    padding: 30px;
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    text-align: justify;
+    line-height: 1.8;
+    margin: 50px auto;
+    margin-left: calc(170px + 10%);
+}
+
+/* Content Styling */
+.main-content h2 {
+    font-family: 'Poppins', Arial, sans-serif;
+    font-size: 28px;
+    font-weight: 600;
+    color: #2a9d8f;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.main-content p {
+    font-size: 18px;
+    margin-bottom: 20px;
+}
+
+.main-content ul {
+    padding-left: 20px;
+    margin-bottom: 20px;
+}
+
+.main-content ul li {
+    font-size: 16px;
+    margin-bottom: 10px;
+    line-height: 1.6;
+}
+
+.main-content strong {
+    color: #264653;
+    font-weight: 600;
+}
+
+.main-content code {
+    font-family: 'Courier New', monospace;
+    background-color: #f4f4f9;
+    padding: 2px 4px;
+    border-radius: 4px;
+    color: #d62828;
+    font-size: 14px;
+}
+
+/* Footer */
+.minimalist-footer {
+    background-color: #f4f4f9;
+    padding: 10px;
+    text-align: center;
+    color: #666;
+    font-size: 18px;
+    width: 100%;
+    border-top: 1px solid #ccc;
+    margin-top: auto;
+}
+
+/* Responsive Design */
+@media screen and (max-width: 768px) {
+    .nav-toggle {
+        display: block;
+    }
+
+    .navbar {
+        transform: translateX(-100%);
+        width: 200px;
+    }
+
+    .navbar.active {
+        transform: translateX(0);
+    }
+
+    .nav-toggle .hamburger {
+        display: block;
+    }
+
+    .nav-toggle.active .hamburger {
+        display: none;
+    }
+
+    .nav-toggle.active .close-btn {
+        display: block;
+    }
+
+    .content-box {
+        width: 100%;
+        margin-left: 0;
+        font-size: 20px;
+    }
+
+    .main-content {
+        width: 95%;
+        margin: 20px auto;
+        margin-left: auto;
+        padding: 15px;
+    }
+
+    .main-content h2 {
+        font-size: 24px;
+    }
+
+    .main-content p,
+    .main-content ul li {
+        font-size: 16px;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .content-box {
+        height: auto;
+        min-height: 65px;
+        font-size: 18px;
+    }
+
+    .main-content {
+        width: 100%;
+        padding: 10px;
+        margin: 10px auto;
+    }
+
+    .social-icons {
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 10px;
+    }
+
+    .main-content h2 {
+        font-size: 20px;
+    }
+
+    .main-content p,
+    .main-content ul li {
+        font-size: 14px;
+    }
+}

@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ChatBot</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}"> 
+  
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
+</head>
+</head>
+<body>
+
+ <!-- Hamburger Button -->
+ <div class="hamburger" onclick="toggleNavbar()">☰</div>
+
+
+
+
+
+
+    <div class="navbar">
+        <button class="close-btn" onclick="toggleNavbar()">✖</button>
+        <br><br>
+        <a href="{{ url_for('index') }}">Home</a><br>
+        <a href="https://www.youtube.com/watch?v=artKg5wnn-o&ab_channel=ckpcollege" target="_blank">Virtual Tour</a><br>
+        <a href="{{ url_for('faq') }}" class="active">FAQs</a><br>
+
+    
+        <a href="{{ url_for('aboutus') }}">About Us</a><br>
+        <a href="{{ url_for('contactus') }}">Contact Us</a><br>
+        
+        <div class="social-icons">
+          
+            <a href="https://www.facebook.com/ckpcollege/friends_mutual/" target="_blank">      <i class="bi bi-facebook" style="color: #4267B2; font-size: 20px;"></i></a>
+
+            <a href="https://www.youtube.com/@ckpcollege" target="_blank" > <i class="bi bi-youtube" style="color: #FF0000; font-size: 20px;"></i></a> 
+            <a href="https://www.instagram.com/ckpcollege/" target="_blank"> <i class="bi bi-instagram" style="color: #C13584; font-size: 20px;"></i></a> 
+            <a href="https://www.linkedin.com/in/ckpcollege/" target="_blank"><i class="bi bi-linkedin" style="color: #0077B5; font-size: 20px;"></i> </a> 
+        </div>
+    </div>
+
+    <div class="content-box">
+        <h2><b><center>WELCOME DEAR USER</center></b></h2>
+        <br>    
+    </div>
+
+    <div class="chat-container">
+        <div class="chat-header">Chatbot For CKPCET</div>
+        <div class="chat-messages" id="chat-messages">
+         
+        </div>
+        <div class="chat-input">
+            <input type="text" id="user-input" placeholder="Type your message or use voice...">
+            <button onclick="startVoiceRecognition()">🎤</button> 
+            <button onclick="sendMessage()">Send</button>
+        </div>
+        </div>
+
+<!-- Add this inside the chat input area -->
+
+
+
+
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+
+    <footer class="minimalist-footer">
+        <p>&copy; 2025 CKPCET CHATBOT</p>
+    </footer>
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script> 
+   
+
+</body>
+</html>
+
