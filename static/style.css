@@ -13,7 +13,7 @@ html, body {
 }
 
 /* Navbar Default */
-.navbar {
+/* .navbar {
     position: fixed;
     top: 0;
     left: 0;
@@ -23,7 +23,44 @@ html, body {
     color: white;
     padding: 20px;
     transition: left 0.3s ease;
+} */
+
+
+.navbar {
+    width: 170px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    background-color: #000;
+    padding-top: 140px;
+    padding-left: 20px;
+    /* z-index: 10; */
+    transition: transform 0.3s ease-in-out;
 }
+
+.navbar a {
+    padding: 14px 1px;
+    text-decoration: none;
+    font-size: 20px;
+    color: white;
+    display: block;
+}
+
+.navbar a:hover {
+    color: #76c7df;
+}
+
+
+
+
+
+
+
+
+
+
+
 
 /* Navbar Hidden for Mobile */
 @media (max-width: 768px) {
@@ -296,3 +333,9 @@ html, body {
 
 
 
+.image1 {
+    width: 137px;
+    height: 112px;
+    margin-top: -133px;
+    margin-left: 8px;
+}

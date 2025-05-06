@@ -196,16 +196,19 @@
 //     document.head.appendChild(style);
 // });
 
+
 document.addEventListener("DOMContentLoaded", function () {
     const chatMessages = document.getElementById("chat-messages");
     const userInput = document.getElementById("user-input");
-    const micButton = document.querySelector(".chat-input button:first-of-type"); // 🎤 Mic Button
-    const sendButton = document.querySelector(".chat-input button:last-of-type"); // Send Button
+    const micButton = document.querySelector(".chat-input button:first-of-type");
+    const sendButton = document.querySelector(".chat-input button:last-of-type");
+    const hamburger = document.querySelector(".hamburger");
+    const navbar = document.querySelector(".navbar");
 
-    let voiceMode = false; // ✅ Bot will speak only if voice button was used
+    let voiceMode = false;
     let recognition = null;
 
-    // ✅ Function to Add Messages to Chat UI
+    // ✅ Chat Message Appending
     function addMessage(text, className) {
         const messageDiv = document.createElement("div");
         messageDiv.classList.add("message", className);
@@ -214,10 +217,10 @@ document.addEventListener("DOMContentLoaded", function () {
         chatMessages.scrollTop = chatMessages.scrollHeight;
     }
 
-    // ✅ Function to Send User Message
+    // ✅ Send Message to Flask API
     function sendMessage() {
         const message = userInput.value.trim();
-        if (message === "") return;
+        if (!message) return;
 
         addMessage("👤 " + message, "user-message");
         userInput.value = "";
@@ -230,11 +233,9 @@ document.addEventListener("DOMContentLoaded", function () {
         .then(response => response.json())
         .then(data => {
             addMessage("🤖 " + data.response, "bot-message");
-
-            // ✅ Speak Response Only If Voice Mode Was Used
             if (voiceMode) {
                 speakResponse(data.speech_response || data.response);
-                voiceMode = false; // Reset voice mode after speaking
+                voiceMode = false;
             }
         })
         .catch(error => {
@@ -243,7 +244,7 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }
 
-    // ✅ Initialize Web Speech API
+    // ✅ Initialize Speech Recognition
     function initializeSpeechRecognition() {
         const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
         if (!SpeechRecognition) {
@@ -261,56 +262,39 @@ document.addEventListener("DOMContentLoaded", function () {
         return recognition;
     }
 
-    // ✅ Setup Speech Recognition Event Handlers
+    // ✅ Setup Voice Event Handlers
     function setupRecognitionHandlers() {
-        recognition.onstart = function () {
-            console.log("🎤 Listening...");
+        recognition.onstart = () => {
             addMessage("🎤 Listening... Speak now!", "bot-message");
             micButton.classList.add("listening");
         };
 
-        recognition.onresult = function (event) {
+        recognition.onresult = event => {
             const transcript = event.results[0][0].transcript.trim();
-            console.log("📝 Recognized Speech:", transcript);
-
             userInput.value = transcript;
-            voiceMode = true; // ✅ Enable voice mode so bot will speak back
+            voiceMode = true;
             sendMessage();
         };
 
-        recognition.onerror = function (event) {
-            console.error("❌ Speech Recognition Error:", event.error);
+        recognition.onerror = event => {
+            console.error("❌ Voice Error:", event.error);
             micButton.classList.remove("listening");
-
-            let errorMessage;
-            switch (event.error) {
-                case 'network':
-                    errorMessage = "❌ Voice recognition failed due to a network error.";
-                    break;
-                case 'not-allowed':
-                    errorMessage = "❌ Microphone access denied. Please allow access and try again.";
-                    alert("⚠️ Please allow microphone access in your browser settings!");
-                    break;
-                case 'no-speech':
-                    errorMessage = "❌ No speech detected. Try again.";
-                    break;
-                case 'audio-capture':
-                    errorMessage = "❌ No microphone detected. Please check your audio settings.";
-                    alert("⚠️ No microphone detected. Check your device settings!");
-                    break;
-                default:
-                    errorMessage = "❌ Voice input error. Please retry.";
-            }
+            let errorMessage = {
+                "network": "❌ Network error during voice recognition.",
+                "not-allowed": "❌ Microphone access denied.",
+                "no-speech": "❌ No speech detected. Try again.",
+                "audio-capture": "❌ No microphone detected."
+            }[event.error] || "❌ Voice input error.";
+            alert(errorMessage);
             addMessage(errorMessage, "bot-message");
         };
 
-        recognition.onend = function () {
-            console.log("🎤 Voice recognition ended");
+        recognition.onend = () => {
             micButton.classList.remove("listening");
         };
     }
 
-    // ✅ Start Speech Recognition (Triggered by 🎤 Button)
+    // ✅ Trigger Voice Recognition
     function startVoiceRecognition() {
         if (!recognition) {
             recognition = initializeSpeechRecognition();
@@ -320,7 +304,6 @@ document.addEventListener("DOMContentLoaded", function () {
         try {
             recognition.start();
         } catch (error) {
-            console.error("❌ Error starting recognition:", error);
             if (error.name === 'InvalidStateError') {
                 recognition.stop();
                 setTimeout(() => recognition.start(), 100);
@@ -330,59 +313,34 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     }
 
-    // ✅ Function to Make Bot Speak Response (Only When Using Voice!)
+    // ✅ Speak the Bot Response
     function speakResponse(responseText) {
-        if (!voiceMode) return; // ✅ Bot will only speak if voice mode was used
+        if (!voiceMode || !responseText) return;
 
-        if (!responseText || responseText.trim() === "") {
-            console.warn("⚠️ No response text to speak!");
-            return;
-        }
-
-        if ('speechSynthesis' in window) {
-            window.speechSynthesis.cancel(); // 🛑 Stop any ongoing speech
-            
-            // ✅ Create Speech Object
-            const utterance = new SpeechSynthesisUtterance(responseText);
-            utterance.lang = "en-US";
-            utterance.rate = 0.9; // 🔥 Slow down for better clarity
-            utterance.pitch = 1;
-
-            utterance.onstart = function () {
-                console.log("🔊 Speaking:", responseText);
-            };
-
-            utterance.onerror = function (event) {
-                console.error("❌ Speech Synthesis Error:", event);
-            };
-
-            utterance.onend = function () {
-                console.log("✅ Speech Finished.");
-                voiceMode = false; // Reset voice mode after speaking
-            };
-
-            // ✅ Prevent Chrome from blocking speech
-            setTimeout(() => {
-                speechSynthesis.speak(utterance);
-            }, 100);
-        } else {
-            console.error("❌ Speech Synthesis API Not Supported in Browser.");
-            addMessage("❌ Voice output is not supported in your browser.", "bot-message");
-        }
+        const utterance = new SpeechSynthesisUtterance(responseText);
+        utterance.lang = "en-US";
+        utterance.rate = 0.9;
+        utterance.pitch = 1;
+        speechSynthesis.cancel();
+        speechSynthesis.speak(utterance);
     }
 
-    // ✅ Add Event Listeners
+    // ✅ Event Listeners
     micButton.addEventListener("click", startVoiceRecognition);
     sendButton.addEventListener("click", sendMessage);
-
-    userInput.addEventListener("keydown", function (event) {
-        if (event.key === "Enter") {
-            event.preventDefault();
+    userInput.addEventListener("keydown", e => {
+        if (e.key === "Enter") {
+            e.preventDefault();
             sendMessage();
         }
     });
 
-    // ✅ Add CSS for Mic Button Animation
+    // ✅ Navbar Toggle
+    hamburger?.addEventListener("click", () => {
+        navbar.classList.toggle("active");
+    });
+
+    // ✅ Mic Animation
     const style = document.createElement('style');
     style.textContent = `
         .listening {
@@ -398,37 +356,3 @@ document.addEventListener("DOMContentLoaded", function () {
     document.head.appendChild(style);
 });
 
-
-
-
-
-
-
-
-
-
-
-// Function to toggle the 'active' class for the navbar
-function toggleNavbar() {
-    const navbar = document.querySelector('.navbar');
-    navbar.classList.toggle('active');
-}
-
-
-
-
-document.addEventListener("DOMContentLoaded", function () {
-    const navbar = document.querySelector(".navbar");
-    const hamburger = document.querySelector(".hamburger");
-    const closeBtn = document.querySelector(".close-btn");
-
-    // Toggle Navbar on Hamburger Click
-    hamburger.addEventListener("click", function () {
-        navbar.classList.add("active");
-    });
-
-    // Hide Navbar on Close Button Click
-    closeBtn.addEventListener("click", function () {
-        navbar.classList.remove("active");
-    });
-});

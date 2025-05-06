@@ -19,26 +19,21 @@
 
 
 
-    <div class="navbar">
-        <button class="close-btn" onclick="toggleNavbar()">✖</button>
-        <br><br>
-        <a href="{{ url_for('index') }}">Home</a><br>
-        <a href="https://www.youtube.com/watch?v=artKg5wnn-o&ab_channel=ckpcollege" target="_blank">Virtual Tour</a><br>
-        <a href="{{ url_for('faq') }}" class="active">FAQs</a><br>
-
-    
-        <a href="{{ url_for('aboutus') }}">About Us</a><br>
-        <a href="{{ url_for('contactus') }}">Contact Us</a><br>
-        
-        <div class="social-icons">
-          
-            <a href="https://www.facebook.com/ckpcollege/friends_mutual/" target="_blank">      <i class="bi bi-facebook" style="color: #4267B2; font-size: 20px;"></i></a>
-
-            <a href="https://www.youtube.com/@ckpcollege" target="_blank" > <i class="bi bi-youtube" style="color: #FF0000; font-size: 20px;"></i></a> 
-            <a href="https://www.instagram.com/ckpcollege/" target="_blank"> <i class="bi bi-instagram" style="color: #C13584; font-size: 20px;"></i></a> 
-            <a href="https://www.linkedin.com/in/ckpcollege/" target="_blank"><i class="bi bi-linkedin" style="color: #0077B5; font-size: 20px;"></i> </a> 
-        </div>
+ <div class="navbar">
+    <img src="{{ url_for('static', filename='images/logo-ckp.png') }}" alt="Photo" class="image1">
+    <br><br>
+    <a href="{{ url_for('index') }}">Home</a><br>
+    <a href="https://www.youtube.com/watch?v=artKg5wnn-o&ab_channel=ckpcollege" target="_blank">Virtual Tour</a><br>
+    <a href="{{ url_for('faq') }}" class="active">FAQs</a><br>
+    <a href="{{ url_for('aboutus') }}">About Us</a><br>
+    <a href="{{ url_for('contactus') }}">Contact Us</a>
+    <div class="social-icons">
+     <a href="https://www.facebook.com/ckpcollege/friends_mutual/" target="_blank"> <i class="bi bi-facebook" style="color: #4267B2; font-size: 20px;"></i></a>
+        <a href="https://www.youtube.com/@ckpcollege" target="_blank" > <i class="bi bi-youtube" style="color: #FF0000; font-size: 20px;"></i></a> 
+        <a href="https://www.instagram.com/ckpcollege/" target="_blank"> <i class="bi bi-instagram" style="color: #C13584; font-size: 20px;"></i></a> 
+        <a href="https://www.linkedin.com/in/ckpcollege/" target="_blank"><i class="bi bi-linkedin" style="color: #0077B5; font-size: 20px;"></i> </a> 
     </div>
+</div>
 
     <div class="content-box">
         <h2><b><center>WELCOME DEAR USER</center></b></h2>
